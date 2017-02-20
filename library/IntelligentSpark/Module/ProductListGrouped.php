@@ -190,18 +190,17 @@ class ProductListGrouped extends ProductList
 
             $arrCSS = deserialize($objProduct->cssID, true);
 
-            $intFirstCategory = current($objProduct->getCategories(true));
-
-            echo 'first category: ' . $intFirstCategory;
-
-            $arrBuffer[] = array(
+            $arrBuffer = array(
                 'cssID'     => ($arrCSS[0] != '') ? ' id="' . $arrCSS[0] . '"' : '',
                 'class'     => trim('product ' . ($objProduct->isNew() ? 'new ' : '') . $arrCSS[1]),
                 'html'      => $objProduct->generate($arrConfig),
                 'product'   => $objProduct,
             );
 
-            //$arrGroups[] = $arrBuffer;
+            //sort product into category groups
+            foreach($this->iso_custom_categories as $id) {
+                $arrGroups[$id]['products'][] = $arrBuffer;
+            }
         }
 
         // HOOK: to add any product field or attribute to mod_iso_productlist template
@@ -214,17 +213,21 @@ class ProductListGrouped extends ProductList
             }
         }
 
-        RowClass::withKey('class')
-            ->addCount('product_')
-            ->addEvenOdd('product_')
-            ->addFirstLast('product_')
-            ->addGridRows($this->iso_cols)
-            ->addGridCols($this->iso_cols)
-            ->applyTo($arrBuffer)
-        ;
+        //this becomes a looped process to make sure each list of products gets it's formatting
+        foreach($arrGroups as $group) {
 
-        $this->Template->products = $arrBuffer;
+            RowClass::withKey('class')
+                ->addCount('product_')
+                ->addEvenOdd('product_')
+                ->addFirstLast('product_')
+                ->addGridRows($this->iso_cols)
+                ->addGridCols($this->iso_cols)
+                ->applyTo($group->products)
+            ;
+        }
 
-        //$this->Template->groups = $arrP
+        //$this->Template->products = $arrBuffer;
+
+        $this->Template->groups = $arrGroups;
     }
 }
