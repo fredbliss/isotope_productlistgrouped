@@ -10,19 +10,16 @@
  * @license    http://opensource.org/licenses/lgpl-3.0.html
  */
 
-if (class_exists('NamespaceClassLoader')) {
-    /**
-     * Register PSR-0 namespace
-     */
-    NamespaceClassLoader::add('IntelligentSpark', 'system/modules/isotope_productlistgrouped/library');
-} 
-
+/**
+ * Register PSR-0 namespace
+ */
+NamespaceClassLoader::add('IntelligentSpark', 'system/modules/isotope_productlistgrouped/library');
 
 /**
  * Register the templates
  */
 TemplateLoader::addFiles(array
 (
-    //'be_iso_integrity'                  => 'system/modules/isotope/templates/backend'
-
+    'mod_iso_productlist_grouped'                  => 'system/modules/isotope_productlistgrouped/templates/modules',
+    'mod_iso_productlist_grouped_caching'          => 'system/modules/isotope_productlistgrouped/templates/modules'
 ));
