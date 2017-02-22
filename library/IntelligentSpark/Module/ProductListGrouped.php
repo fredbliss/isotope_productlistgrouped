@@ -200,16 +200,22 @@ class ProductListGrouped extends ProductList
             );
 
             //get first category only for grouping.
-            $id = current($objProduct->getCategories(true));
+            $arrCategories = array_intersect($this->findCategories(),$objProduct->getCategories(true));
 
-            //add product into category groups
-            //foreach($arrCategories as $id) {
-                $arrGroups[$id]['class'] = '';
-                $arrGroups[$id]['id'] = $id;
-                $arrGroups[$id]['content'] = '';
-                $arrGroups[$id]['title'] = '';
-                $arrGroups[$id]['products'][$objProduct->getId()] = $arrBuffer;
-            //}
+            if(count($arrCategories)) {
+                foreach($arrCategories as $id) {
+
+                    if(!array_key_exists($id,$arrGroups)) {
+                        $arrGroups[$id]['class'] = '';
+                        $arrGroups[$id]['id'] = $id;
+                        $arrGroups[$id]['content'] = '';
+                        $arrGroups[$id]['title'] = '';
+                    }
+
+                    if(array_key_exists($id,$arrGroups) && count($arrGroups[$id]['products'])<$this->iso_perGroup)
+                        $arrGroups[$id]['products'][$objProduct->getId()] = $arrBuffer;
+                }
+            }
         }
 
         // HOOK: to add any product field or attribute to mod_iso_productlist template
@@ -234,8 +240,6 @@ class ProductListGrouped extends ProductList
                 ->applyTo($group['products'])
             ;
         }
-
-        //$this->Template->products = $arrBuffer;
 
         $this->Template->groups = $arrGroups;
     }
