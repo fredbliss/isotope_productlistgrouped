@@ -197,8 +197,12 @@ class ProductListGrouped extends ProductList
                 'product'   => $objProduct,
             );
 
-            //sort product into category groups
+            //add product into category groups
             foreach($this->iso_custom_categories as $id) {
+                $arrGroups[$id]['class'] = '';
+                $arrGroups[$id]['id'] = $id;
+                $arrGroups[$id]['content'] = '';
+                $arrGroups[$id]['title'] = '';
                 $arrGroups[$id]['products'][] = $arrBuffer;
             }
         }
