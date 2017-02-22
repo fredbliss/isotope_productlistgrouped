@@ -13,8 +13,9 @@
 /**
  * Register PSR-0 namespace
  */
-NamespaceClassLoader::add('IntelligentSpark', 'system/modules/isotope_productlistgrouped/library');
-
+if (class_exists('NamespaceClassLoader')) {
+    NamespaceClassLoader::add('IntelligentSpark', 'system/modules/isotope_productlistgrouped/library');
+}
 /**
  * Register the templates
  */
