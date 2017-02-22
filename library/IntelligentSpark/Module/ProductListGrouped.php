@@ -158,6 +158,7 @@ class ProductListGrouped extends ProductList
         }
 
         $arrBuffer         = array();
+        $arrGroups          = array();
         $arrDefaultOptions = $this->getDefaultProductOptions();
 
         /** @var \Isotope\Model\Product\Standard $objProduct */
@@ -198,14 +199,17 @@ class ProductListGrouped extends ProductList
                 'product'   => $objProduct,
             );
 
+            //get first category only for grouping.
+            $id = current($objProduct->getCategories(true));
+
             //add product into category groups
-            foreach($this->iso_custom_categories as $id) {
+            //foreach($arrCategories as $id) {
                 $arrGroups[$id]['class'] = '';
                 $arrGroups[$id]['id'] = $id;
                 $arrGroups[$id]['content'] = '';
                 $arrGroups[$id]['title'] = '';
-                $arrGroups[$id]['products'][] = $arrBuffer;
-            }
+                $arrGroups[$id]['products'][$objProduct->getId()] = $arrBuffer;
+            //}
         }
 
         // HOOK: to add any product field or attribute to mod_iso_productlist template
@@ -227,7 +231,7 @@ class ProductListGrouped extends ProductList
                 ->addFirstLast('product_')
                 ->addGridRows($this->iso_cols)
                 ->addGridCols($this->iso_cols)
-                ->applyTo($group->products)
+                ->applyTo($group['products'])
             ;
         }
 
