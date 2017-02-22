@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/cs02/xliff-core-1.2-strict.xsd">
+    <file datatype="plaintext" original="system/modules/isotope_productlistgrouped/languages/en/tl_module.xlf" source-language="en">
+        <body>
+            <trans-unit id="tl_module.iso_perGroup.0">
+                <source>Products per group</source>
+            </trans-unit>
+            <trans-unit id="tl_module.iso_perGroup.1">
+                <source>Specify how many products in a given group.</source>
+            </trans-unit>
+            <trans-unit id="tl_module.iso_custom_categories.0">
+                <source>Categories</source>
+            </trans-unit>
+            <trans-unit id="tl_module.iso_custom_categories.1">
+                <source>Select one or more categories that you would like to show in this product list.</source>
+            </trans-unit>
+            <trans-unit id="tl_module.iso_category_scope_ref.custom.0">
+                <source>Custom Categories</source>
+            </trans-unit>
+            <trans-unit id="tl_module.iso_category_scope_ref.custom.1">
+                <source>Select one or more cateogries to include.</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
