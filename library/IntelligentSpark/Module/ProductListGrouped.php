@@ -16,6 +16,7 @@ use Haste\Generator\RowClass;
 use Haste\Http\Response\HtmlResponse;
 use Haste\Input\Input;
 use Isotope\Isotope;
+use Isotope\ProductList;
 use Isotope\Model\Attribute;
 use Isotope\Model\Product;
 use Isotope\Model\ProductCache;
@@ -36,7 +37,7 @@ use Isotope\Template;
  * @property string $iso_listingSortDirection
  * @property bool   $iso_jump_first
  */
-class ProductListGrouped extends ProductList
+class ProductListGrouped extends Isotope\ProductList
 {
     /**
      * Template
