@@ -15,6 +15,7 @@ namespace IntelligentSpark\Module;
 use Haste\Generator\RowClass;
 use Haste\Http\Response\HtmlResponse;
 use Haste\Input\Input;
+use Contao\PageModel;
 use Isotope\Isotope;
 use Isotope\Module\ProductList;
 use Isotope\Model\Attribute;
@@ -159,6 +160,7 @@ class ProductListGrouped extends ProductList
 
         $arrBuffer         = array();
         $arrGroups          = array();
+        $arrAllCategories   = array();
         $arrDefaultOptions = $this->getDefaultProductOptions();
 
         /** @var \Isotope\Model\Product\Standard $objProduct */
@@ -201,11 +203,12 @@ class ProductListGrouped extends ProductList
 
             //get first category only for grouping.
             $arrCategories = array_intersect($this->findCategories(),$objProduct->getCategories(true));
+            $arrAllCategories = array_merge($arrAllCategories,$arrCategories);
 
             if(count($arrCategories)) {
-                foreach($arrCategories as $id) {
+                foreach($arrCategories as $i=>$id) {
 
-                    if(!array_key_exists($id,$arrGroups)) {
+                    if(!array_key_exists($i, $arrGroups)) {
                         $arrGroups[$id]['class'] = '';
                         $arrGroups[$id]['id'] = $id;
                         $arrGroups[$id]['content'] = '';
@@ -228,8 +231,18 @@ class ProductListGrouped extends ProductList
             }
         }
 
+        //get additional page sorting information
+        $objPages = \Database::getInstance()->execute("SELECT id,sorting FROM tl_page WHERE id IN(".implode(",",array_unique($arrAllCategories)).")");
+
+        //reorder by sort value!
+        while($objPages->next()) {
+            $arrFinalGroups[$objPages->sorting] = $arrGroups[$objPages->id];
+        }
+
+        ksort($arrFinalGroups);
+
         //this becomes a looped process to make sure each list of products gets it's formatting
-        foreach($arrGroups as $group) {
+        foreach($arrFinalGroups as $group) {
 
             RowClass::withKey('class')
                 ->addCount('product_')
@@ -241,6 +254,6 @@ class ProductListGrouped extends ProductList
             ;
         }
 
-        $this->Template->groups = $arrGroups;
+        $this->Template->groups = $arrFinalGroups;
     }
 }
