@@ -15,7 +15,9 @@ namespace IntelligentSpark\Module;
 use Haste\Generator\RowClass;
 use Haste\Http\Response\HtmlResponse;
 use Haste\Input\Input;
+use Contao\PageModel;
 use Isotope\Isotope;
+use Isotope\Module\ProductList;
 use Isotope\Model\Attribute;
 use Isotope\Model\Product;
 use Isotope\Model\ProductCache;
@@ -157,6 +159,8 @@ class ProductListGrouped extends ProductList
         }
 
         $arrBuffer         = array();
+        $arrGroups          = array();
+        $arrAllCategories   = array();
         $arrDefaultOptions = $this->getDefaultProductOptions();
 
         /** @var \Isotope\Model\Product\Standard $objProduct */
@@ -197,13 +201,23 @@ class ProductListGrouped extends ProductList
                 'product'   => $objProduct,
             );
 
-            //add product into category groups
-            foreach($this->iso_custom_categories as $id) {
-                $arrGroups[$id]['class'] = '';
-                $arrGroups[$id]['id'] = $id;
-                $arrGroups[$id]['content'] = '';
-                $arrGroups[$id]['title'] = '';
-                $arrGroups[$id]['products'][] = $arrBuffer;
+            //get first category only for grouping.
+            $arrCategories = array_intersect($this->findCategories(),$objProduct->getCategories(true));
+            $arrAllCategories = array_merge($arrAllCategories,$arrCategories);
+
+            if(count($arrCategories)) {
+                foreach($arrCategories as $i=>$id) {
+
+                    if(!array_key_exists($i, $arrGroups)) {
+                        $arrGroups[$id]['class'] = '';
+                        $arrGroups[$id]['id'] = $id;
+                        $arrGroups[$id]['content'] = '';
+                        $arrGroups[$id]['title'] = '';
+                    }
+
+                    if(array_key_exists($id,$arrGroups) && count($arrGroups[$id]['products'])<$this->iso_perGroup)
+                        $arrGroups[$id]['products'][$objProduct->getId()] = $arrBuffer;
+                }
             }
         }
 
@@ -217,8 +231,18 @@ class ProductListGrouped extends ProductList
             }
         }
 
+        //get additional page sorting information
+        $objPages = \Database::getInstance()->execute("SELECT id,sorting FROM tl_page WHERE id IN(".implode(",",array_unique($arrAllCategories)).")");
+
+        //reorder by sort value!
+        while($objPages->next()) {
+            $arrFinalGroups[$objPages->sorting] = $arrGroups[$objPages->id];
+        }
+
+        ksort($arrFinalGroups);
+
         //this becomes a looped process to make sure each list of products gets it's formatting
-        foreach($arrGroups as $group) {
+        foreach($arrFinalGroups as $group) {
 
             RowClass::withKey('class')
                 ->addCount('product_')
@@ -226,12 +250,10 @@ class ProductListGrouped extends ProductList
                 ->addFirstLast('product_')
                 ->addGridRows($this->iso_cols)
                 ->addGridCols($this->iso_cols)
-                ->applyTo($group->products)
+                ->applyTo($group['products'])
             ;
         }
 
-        //$this->Template->products = $arrBuffer;
-
-        $this->Template->groups = $arrGroups;
+        $this->Template->groups = $arrFinalGroups;
     }
 }

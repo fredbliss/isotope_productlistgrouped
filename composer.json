@@ -1,6 +1,6 @@
 {
     "name": "intelligentspark/isotope_productgrouplist",
-    "description": "A series of core extensions to Frontend, Product Model, and a new extended version of the Product List module called \"ProductGroupList\"",
+    "description": "An extended version of the Product List module that allows products to be displayed in category-based groupings",
     "keywords": [
         "contao",
         "isotope",
@@ -29,6 +29,13 @@
             "IntelligentSpark\\": [
                 "library/"
             ]
+        }
+    },
+    "extra": {
+        "contao": {
+            "sources": {
+                "": "system/modules/isotope_productlistgrouped"
+            }
         }
     },
     "minimum-stability": "dev",
