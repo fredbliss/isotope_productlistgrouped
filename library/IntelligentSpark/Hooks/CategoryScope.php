@@ -20,7 +20,7 @@ class CategoryScope {
 
         switch ($objModule->iso_category_scope) {
             case 'custom':
-                return $objModule->iso_custom_categories;
+                return deserialize($objModule->iso_custom_categories);
                 break;
             default:
                 return array();

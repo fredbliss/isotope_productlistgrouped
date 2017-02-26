@@ -16,6 +16,7 @@
 if (class_exists('NamespaceClassLoader')) {
     NamespaceClassLoader::add('IntelligentSpark', 'system/modules/isotope_productlistgrouped/library');
 }
+
 /**
  * Register the templates
  */
