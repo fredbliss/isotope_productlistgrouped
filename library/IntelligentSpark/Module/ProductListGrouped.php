@@ -239,20 +239,25 @@ class ProductListGrouped extends ProductList
             $arrFinalGroups[$objPages->sorting] = $arrGroups[$objPages->id];
         }
 
-        ksort($arrFinalGroups);
+        if(count($arrFinalGroups)) {
+            ksort($arrFinalGroups);
 
-        //this becomes a looped process to make sure each list of products gets it's formatting
-        foreach($arrFinalGroups as $group) {
+            //this becomes a looped process to make sure each list of products gets it's formatting
+            foreach($arrFinalGroups as $group) {
 
-            RowClass::withKey('class')
-                ->addCount('product_')
-                ->addEvenOdd('product_')
-                ->addFirstLast('product_')
-                ->addGridRows($this->iso_cols)
-                ->addGridCols($this->iso_cols)
-                ->applyTo($group['products'])
-            ;
+                RowClass::withKey('class')
+                    ->addCount('product_')
+                    ->addEvenOdd('product_')
+                    ->addFirstLast('product_')
+                    ->addGridRows($this->iso_cols)
+                    ->addGridCols($this->iso_cols)
+                    ->applyTo($group['products'])
+                ;
+            }
+        }else{
+            $arrFinalGroups = array();
         }
+
 
         $this->Template->groups = $arrFinalGroups;
     }
