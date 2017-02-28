@@ -215,8 +215,14 @@ class ProductListGrouped extends ProductList
                         $arrGroups[$id]['title'] = '';
                     }
 
-                    if(array_key_exists($id,$arrGroups) && count($arrGroups[$id]['products'])<$this->iso_perGroup)
-                        $arrGroups[$id]['products'][$objProduct->getId()] = $arrBuffer;
+                    if($this->iso_perGroup > 0) {
+                        if(array_key_exists($id,$arrGroups) && count($arrGroups[$id]['products'])<$this->iso_perGroup)
+                            $arrGroups[$id]['products'][$objProduct->getId()] = $arrBuffer;
+                    }else{
+                        if(array_key_exists($id,$arrGroups)
+                            $arrGroups[$id]['products'][$objProduct->getId()] = $arrBuffer;
+                    }
+
                 }
             }
         }
