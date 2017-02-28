@@ -219,7 +219,7 @@ class ProductListGrouped extends ProductList
                         if(array_key_exists($id,$arrGroups) && count($arrGroups[$id]['products'])<$this->iso_perGroup)
                             $arrGroups[$id]['products'][$objProduct->getId()] = $arrBuffer;
                     }else{
-                        if(array_key_exists($id,$arrGroups)
+                        if(array_key_exists($id,$arrGroups))
                             $arrGroups[$id]['products'][$objProduct->getId()] = $arrBuffer;
                     }
 
