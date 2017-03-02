@@ -211,7 +211,7 @@ class ProductListGrouped extends ProductList
                     if(!array_key_exists($i, $arrGroups)) {
                         $arrGroups[$id]['class'] = '';
                         $arrGroups[$id]['id'] = $id;
-                        $arrGroups[$id]['content'] = '';
+                        $arrGroups[$id]['content'] = $this->getFirstArticle($id);
                         $arrGroups[$id]['title'] = '';
                     }
 
@@ -266,5 +266,29 @@ class ProductListGrouped extends ProductList
 
 
         $this->Template->groups = $arrFinalGroups;
+    }
+
+    /**
+     * Custom tweaked getArticle to grab the first one for output.
+     * @param integer
+     * @return string
+     */
+    protected function getFirstArticle($intPageId) {
+
+        $strArticle = '';
+
+        // Get the article
+        $objRow = \Database::getInstance()->prepare("SELECT * FROM tl_article WHERE pid=? AND published='1' ORDER BY sorting ASC")
+            ->limit(1)
+            ->execute($intPageId);
+
+        if($objRow->numRows>0) {
+            $objArticle = new \ModuleArticle($objRow);
+            $strArticle = $objArticle->generate(false);
+        }else{
+            return false;
+        }
+
+        return $strArticle;
     }
 }
