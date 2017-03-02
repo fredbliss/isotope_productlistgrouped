@@ -2,6 +2,12 @@
 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/cs02/xliff-core-1.2-strict.xsd">
     <file datatype="plaintext" original="system/modules/isotope_productlistgrouped/languages/en/tl_module.xlf" source-language="en">
         <body>
+            <trans-unit id="tl_module.insertContentOption.0">
+                <source>Inserted Content Mode</source>
+            </trans-unit>
+            <trans-unit id="tl_module.insertContentOption.1">
+                <source>If inserting content from a category's first article, choose published or un-published content.</source>
+            </trans-unit>
             <trans-unit id="tl_module.iso_perGroup.0">
                 <source>Products per group</source>
             </trans-unit>
@@ -19,6 +25,18 @@
             </trans-unit>
             <trans-unit id="tl_module.iso_category_scope_ref.custom.1">
                 <source>Select one or more cateogries to include.</source>
+            </trans-unit>
+            <trans-unit id="tl_module.insertContentOption_ref.unpublished.0">
+                <source>Unpublished</source>
+            </trans-unit>
+            <trans-unit id="tl_module.insertContentOption_ref.unpublished.1">
+                <source></source>
+            </trans-unit>
+            <trans-unit id="tl_module.insertContentOption_ref.published.0">
+                <source>Published</source>
+            </trans-unit>
+            <trans-unit id="tl_module.insertContentOption_ref.published.1">
+                <source></source>
             </trans-unit>
         </body>
     </file>

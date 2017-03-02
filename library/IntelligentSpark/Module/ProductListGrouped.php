@@ -277,8 +277,10 @@ class ProductListGrouped extends ProductList
 
         $strArticle = '';
 
+        $strPublished = ($this->insertContentOption=='unpublished' ? '' : '1');
+
         // Get the article
-        $objRow = \Database::getInstance()->prepare("SELECT * FROM tl_article WHERE pid=? AND published='1' ORDER BY sorting ASC")
+        $objRow = \Database::getInstance()->prepare("SELECT * FROM tl_article WHERE pid=? AND published='$strPublished' ORDER BY sorting ASC")
             ->limit(1)
             ->execute($intPageId);
 

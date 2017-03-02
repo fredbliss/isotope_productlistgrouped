@@ -15,13 +15,24 @@
  */
 $GLOBALS['TL_DCA']['tl_module']['palettes']['__selector__'][] = 'iso_category_scope';
 
-$GLOBALS['TL_DCA']['tl_module']['palettes']['iso_productlistgrouped'] = '{title_legend},name,headline,type;{config_legend},numberOfItems,perPage,iso_perGroup,iso_cols,iso_category_scope,iso_list_where,iso_newFilter,iso_filterModules,iso_listingSortField,iso_listingSortDirection;{redirect_legend},iso_addProductJumpTo,iso_jump_first;{reference_legend:hide},defineRoot;{template_legend:hide},customTpl,iso_list_layout,iso_gallery,iso_cols,iso_use_quantity,iso_hide_list,iso_includeMessages,iso_emptyMessage,iso_emptyFilter,iso_buttons;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['iso_productlistgrouped'] = '{title_legend},name,headline,type;{config_legend},insertContentOption,numberOfItems,perPage,iso_perGroup,iso_cols,iso_category_scope,iso_list_where,iso_newFilter,iso_filterModules,iso_listingSortField,iso_listingSortDirection;{redirect_legend},iso_addProductJumpTo,iso_jump_first;{reference_legend:hide},defineRoot;{template_legend:hide},customTpl,iso_list_layout,iso_gallery,iso_cols,iso_use_quantity,iso_hide_list,iso_includeMessages,iso_emptyMessage,iso_emptyFilter,iso_buttons;{protected_legend:hide},protected;{expert_legend:hide},guests,cssID,space';
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['iso_category_scope']['options'][] = 'custom';
 $GLOBALS['TL_DCA']['tl_module']['fields']['iso_category_scope']['eval']['submitOnChange'] = true;
 
 $GLOBALS['TL_DCA']['tl_module']['subpalettes']['iso_category_scope_custom'] = 'iso_custom_categories';
 
+$GLOBALS['TL_DCA']['tl_module']['fields']['insertContentOption'] = array
+(
+    'label'						=> &$GLOBALS['TL_LANG']['tl_module']['insertContentOption'],
+    'exclude'					=> true,
+    'default'					=> 0,
+    'inputType'					=> 'select',
+    'options'                   => array('unpublished','published'),
+    'reference'                 => $GLOBALS['TL_LANG']['tl_module']['insertContentOption_ref'],
+    'eval'						=> array('maxlength'=>64, 'tl_class'=>'w50'),
+    'sql'                       => "varchar(255) NOT NULL default ''"
+);
 
 $GLOBALS['TL_DCA']['tl_module']['fields']['iso_perGroup'] = array
 (
