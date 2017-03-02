@@ -28,7 +28,8 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['insertContentOption'] = array
     'exclude'					=> true,
     'default'					=> 0,
     'inputType'					=> 'select',
-    'options'                   => array('unpublished','published'),
+    'default'                   => 'none',
+    'options'                   => array('none','unpublished','published'),
     'reference'                 => $GLOBALS['TL_LANG']['tl_module']['insertContentOption_ref'],
     'eval'						=> array('maxlength'=>64, 'tl_class'=>'w50'),
     'sql'                       => "varchar(255) NOT NULL default ''"

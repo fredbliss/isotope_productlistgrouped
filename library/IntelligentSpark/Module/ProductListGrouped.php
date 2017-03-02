@@ -211,7 +211,7 @@ class ProductListGrouped extends ProductList
                     if(!array_key_exists($i, $arrGroups)) {
                         $arrGroups[$id]['class'] = '';
                         $arrGroups[$id]['id'] = $id;
-                        $arrGroups[$id]['content'] = $this->getFirstArticle($id);
+                        $arrGroups[$id]['content'] = (in_array($this->insertContentOption,['unpublished','published'])  ? $this->getFirstArticle($id) : false);
                         $arrGroups[$id]['title'] = '';
                     }
 

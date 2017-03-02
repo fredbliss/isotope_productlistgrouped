@@ -26,6 +26,12 @@
             <trans-unit id="tl_module.iso_category_scope_ref.custom.1">
                 <source>Select one or more cateogries to include.</source>
             </trans-unit>
+            <trans-unit id="tl_module.insertContentOption_ref.none.0">
+                <source>No Content Inserted</source>
+            </trans-unit>
+            <trans-unit id="tl_module.insertContentOption_ref.none.1">
+                <source></source>
+            </trans-unit>
             <trans-unit id="tl_module.insertContentOption_ref.unpublished.0">
                 <source>Unpublished</source>
             </trans-unit>
