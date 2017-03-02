@@ -11,7 +11,11 @@
 <div class="subcategory_list">
 <?php foreach ($this->groups as $group): ?>
 <div class="subcategory<?php echo ' '.$group['class']; ?>">
-<a href="{{link_url::<?php echo $group['id']; ?>}}" title="<?php echo ($group['content'] ? $group['content'] : $group['title']); ?><?php echo ($group['content'] ? $group['content'] : $group['title']); ?>"><?php echo ($group['content'] ? $group['content'] : $group['title']); ?> View All</a>
+<div class="subcategory_intro">
+    <h2>{{link_title::<?php echo $group['id']; ?>}}</h2>
+    <?= $group['content']; ?>
+    <a href="{{link_url::<?php echo $group['id']; ?>}}" title="<?= $group['title']; ?>">View All</a>
+</div>
 <?php if(!empty($group['products'])): ?>
 <div class="product_list">
 <?php foreach ($group['products'] as $product): ?>
