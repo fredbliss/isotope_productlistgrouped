@@ -16,6 +16,7 @@ use Haste\Generator\RowClass;
 use Haste\Http\Response\HtmlResponse;
 use Haste\Input\Input;
 use Contao\PageModel;
+use Contao\Model\Collection;
 use Isotope\Isotope;
 use Isotope\Module\ProductList;
 use Isotope\Model\Attribute;
@@ -160,7 +161,7 @@ class ProductListGrouped extends ProductList
 
         $arrBuffer         = array();
         $arrGroups          = array();
-        $arrAllCategories   = array();
+        $arrCategories   = $this->findCategories();
         $arrDefaultOptions = $this->getDefaultProductOptions();
 
         /** @var \Isotope\Model\Product\Standard $objProduct */
@@ -202,27 +203,31 @@ class ProductListGrouped extends ProductList
             );
 
             //get first category only for grouping.
-            $arrCategories = array_intersect($this->findCategories(),$objProduct->getCategories(true));
-            $arrAllCategories = array_merge($arrAllCategories,$arrCategories);
+            //$arrCategories = array_intersect($this->findCategories(),$objProduct->getCategories(true));
+            //$arrAllCategories = array_merge($arrAllCategories,$arrCategories);
 
             if(count($arrCategories)) {
                 foreach($arrCategories as $i=>$id) {
 
-                    if(!array_key_exists($i, $arrGroups)) {
+                    if (!array_key_exists($i, $arrGroups)) {
                         $arrGroups[$id]['class'] = '';
                         $arrGroups[$id]['id'] = $id;
-                        $arrGroups[$id]['content'] = (in_array($this->insertContentOption,['unpublished','published'])  ? $this->getFirstArticle($id) : false);
+                        $arrGroups[$id]['content'] = (in_array($this->insertContentOption, ['unpublished', 'published']) ? $this->getFirstArticle($id) : false);
                         $arrGroups[$id]['title'] = '';
+
+                        if(empty($arrGroups[$id]['products']))
+                            $arrGroups[$id]['products'] = array();
                     }
 
-                    if($this->iso_perGroup > 0) {
-                        if(array_key_exists($id,$arrGroups) && count($arrGroups[$id]['products'])<$this->iso_perGroup)
-                            $arrGroups[$id]['products'][$objProduct->getId()] = $arrBuffer;
-                    }else{
-                        if(array_key_exists($id,$arrGroups))
-                            $arrGroups[$id]['products'][$objProduct->getId()] = $arrBuffer;
+                    if(in_array($id,$objProduct->getCategories(true))) {
+                        if ($this->iso_perGroup > 0) {
+                            if (array_key_exists($id, $arrGroups) && count($arrGroups[$id]['products']) < $this->iso_perGroup)
+                                $arrGroups[$id]['products'][$objProduct->getId()] = $arrBuffer;
+                        } else {
+                            if (array_key_exists($id, $arrGroups))
+                                $arrGroups[$id]['products'][$objProduct->getId()] = $arrBuffer;
+                        }
                     }
-
                 }
             }
         }
@@ -238,7 +243,7 @@ class ProductListGrouped extends ProductList
         }
 
         //get additional page sorting information
-        $objPages = \Database::getInstance()->execute("SELECT id,sorting FROM tl_page WHERE id IN(".implode(",",array_unique($arrAllCategories)).")");
+        $objPages = \Database::getInstance()->execute("SELECT id,sorting FROM tl_page WHERE id IN(".implode(",",array_unique($arrCategories)).")");
 
         //reorder by sort value!
         while($objPages->next()) {
@@ -249,7 +254,15 @@ class ProductListGrouped extends ProductList
             ksort($arrFinalGroups);
 
             //this becomes a looped process to make sure each list of products gets it's formatting
-            foreach($arrFinalGroups as $group) {
+            foreach($arrFinalGroups as $k=>$group) {
+
+                /*if(empty($group)) {
+                    $group['id'] = $k;
+                    $group['class'] = '';
+                    $group['title'] = '';
+                    $group['content'] = (in_array($this->insertContentOption, ['unpublished', 'published']) ? $this->getFirstArticle($k) : false);
+                    $group['products'] = array();
+                }*/
 
                 RowClass::withKey('class')
                     ->addCount('product_')
@@ -257,8 +270,7 @@ class ProductListGrouped extends ProductList
                     ->addFirstLast('product_')
                     ->addGridRows($this->iso_cols)
                     ->addGridCols($this->iso_cols)
-                    ->applyTo($group['products'])
-                ;
+                    ->applyTo($group['products']);
             }
         }else{
             $arrFinalGroups = array();
