@@ -27,7 +27,7 @@
     "autoload": {
         "psr-0": {
             "IntelligentSpark\\": [
-                "library/"
+                "system/modules/isotope_productlistgrouped/library/"
             ]
         }
     },
