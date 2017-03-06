@@ -52,6 +52,6 @@ $GLOBALS['TL_DCA']['tl_module']['fields']['iso_custom_categories'] = array
     'inputType'               => 'pageTree',
     'foreignKey'              => 'tl_page.title',
     'eval'                    => array('tl_class'=>'clr', 'multiple'=>true, 'fieldType'=>'checkbox', 'orderField'=>'orderPages', 'mandatory'=>true),
-    'sql'                     => "blob null",
+    'sql'                     => "mediumblob NULL",
     'relation'                => array('type'=>'hasMany', 'load'=>'lazy')
 );
