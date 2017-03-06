@@ -27,14 +27,14 @@
     "autoload": {
         "psr-0": {
             "IntelligentSpark\\": [
-                "system/modules/isotope_productlistgrouped/library/"
+                "system/modules/isotope_productgrouplist/library/"
             ]
         }
     },
     "extra": {
         "contao": {
             "sources": {
-                "system/modules/isotope_productlistgrouped": "system/modules/isotope_productlistgrouped"
+                "": "system/modules/isotope_productgrouplist"
             }
         }
     },

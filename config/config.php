@@ -12,5 +12,3 @@
 
 $GLOBALS['FE_MOD']['isotope']['iso_productlistgrouped'] = 'IntelligentSpark\Module\ProductListGrouped';
 $GLOBALS['ISO_HOOKS']['findCategories'][] = ['IntelligentSpark\Hooks\CategoryScope','findCategories'];
-
-//\Isotope\Model\Product::registerModelType('standardgroupable', 'IntelligentSpark\Model\Product\StandardGroupable');
