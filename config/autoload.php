@@ -14,7 +14,7 @@
  * Register PSR-0 namespace
  */
 if (class_exists('NamespaceClassLoader')) {
-    NamespaceClassLoader::add('IntelligentSpark', 'system/modules/isotope_productlistgrouped/library');
+    NamespaceClassLoader::add('IntelligentSpark', 'system/modules/isotope_productgrouplist/library');
 }
 
 /**
@@ -22,6 +22,6 @@ if (class_exists('NamespaceClassLoader')) {
  */
 TemplateLoader::addFiles(array
 (
-    'mod_iso_productlist_grouped'                  => 'system/modules/isotope_productlistgrouped/templates/modules',
-    'mod_iso_productlist_grouped_caching'          => 'system/modules/isotope_productlistgrouped/templates/modules'
+    'mod_iso_productlist_grouped'                  => 'system/modules/isotope_productgrouplist/templates/modules',
+    'mod_iso_productlist_grouped_caching'          => 'system/modules/isotope_productgrouplist/templates/modules'
 ));
